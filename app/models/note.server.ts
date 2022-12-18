@@ -10,7 +10,7 @@ export type Note = {
 
 export async function getNoteListItems({ userId }: { userId: User["id"] }) {
   const { data } = await supabase
-    .from("notes")
+    .from("creation")
     .select("id, title")
     .eq("profile_id", userId);
 
@@ -23,7 +23,7 @@ export async function createNote({
   userId,
 }: Pick<Note, "body" | "title"> & { userId: User["id"] }) {
   const { data, error } = await supabase
-    .from("notes")
+    .from("creation")
     .insert([{ title, body, profile_id: userId }])
     .single();
 
@@ -39,7 +39,7 @@ export async function deleteNote({
   userId,
 }: Pick<Note, "id"> & { userId: User["id"] }) {
   const { error } = await supabase
-    .from("notes")
+    .from("creation")
     .delete({ returning: "minimal" })
     .match({ id, profile_id: userId });
 
@@ -55,7 +55,7 @@ export async function getNote({
   userId,
 }: Pick<Note, "id"> & { userId: User["id"] }) {
   const { data, error } = await supabase
-    .from("notes")
+    .from("creation")
     .select("*")
     .eq("profile_id", userId)
     .eq("id", id)
