@@ -10,9 +10,6 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const name = formData.get("name");
 
-  if (typeof name !== "string" || name.length === 0) {
-    return json({ errors: { name: "name is required" } }, { status: 400 });
-  }
   console.log(name);
   const character = await createCharacter({ name, userId });
   return redirect(`/character/${character.id}`);
