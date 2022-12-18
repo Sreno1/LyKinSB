@@ -38,7 +38,7 @@ export default function Index() {
                     </Link>
                   ) : (
                     <Link
-                      to="/creation"
+                      to="/character/creation"
                       className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-violet-700 shadow-sm hover:bg-violet-50 sm:px-8"
                     >
                       Begin Your Journey
