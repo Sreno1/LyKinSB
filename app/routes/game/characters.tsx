@@ -20,6 +20,9 @@ export default function CharactersPage() {
     data.characterListItems.length === 0 ? (
         <p className="p-4">No characters yet</p>
         ) : (
+        <div className="flex-1 p-6">
+            <Outlet />
+        </div>
         <ol>
             {data.characterListItems.map((character) => (
             <li key={character.id}>
@@ -34,9 +37,6 @@ export default function CharactersPage() {
             </li>
             ))}
         </ol>
-    <div className="flex-1 p-6">
-        <Outlet />
-    </div>
     )
   );
 }
