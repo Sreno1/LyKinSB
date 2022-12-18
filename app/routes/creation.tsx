@@ -8,9 +8,9 @@ export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const formData = await request.formData();
   const name = formData.get("name");
-
+  const last = formData.get("last");
   console.log(name);
-  const character = await createCharacter({ name, userId });
+  const character = await createCharacter({ name, last, userId });
   return redirect(`/character/${character.id}`);
 };
 
@@ -30,6 +30,15 @@ export default function NewCharacterPage() {
           <span>Name: </span>
           <input
             name="name"
+            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+          />
+        </label>
+      </div>
+      <div>
+        <label className="flex w-full flex-col gap-1">
+          <span>Last: </span>
+          <input
+            name="last"
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
           />
         </label>

@@ -4,6 +4,7 @@ import { supabase } from "./user.server";
 export type Character = {
   id: string;
   name: string;
+  last: string;
 };
 
 export async function getCharacterListItems({ userId }: { userId: User["id"] }) {
@@ -15,10 +16,13 @@ export async function getCharacterListItems({ userId }: { userId: User["id"] }) 
   return data;
 }
 
-export async function createCharacter({ name, userId }: { name: string, userId: User["id"] }) {
-  const { data, error } = await supabase
+export async function createCharacter({
+  name,
+  last,
+  userId,
+}: Pick<Character, "last" | "name"> & { userId: User["id"] }) {  const { data, error } = await supabase
     .from("player_characters")
-    .insert({ name: name })
+    .insert([{ name, last, associated_uid: userId }])
     .select();
 
   if (!error) {
