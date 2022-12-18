@@ -6,13 +6,14 @@ export type Character = {
   name: string;
   last: string;
   associated_uid: string;
+  profile_id: string;
 };
 
 export async function getCharacterListItems({ userId }: { userId: User["id"] }) {
   const { data } = await supabase
     .from("player_characters")
     .select("id, name")
-    .eq("associated_uid", userId);
+    .eq("profile_id", userId);
 
   return data;
 }
@@ -55,13 +56,13 @@ export async function getCharacter({
   const { data, error } = await supabase
     .from("player_characters")
     .select("*")
-    .eq("associated_uid", userId)
+    .eq("profile_id", userId)
     .eq("id", id)
     .single();
 
   if (!error) {
     return {
-      userId: data.associated_uid,
+      userId: data.profile_id,
       id: data.id,
       name: data.name,
     };
