@@ -13,7 +13,7 @@ export type Character = {
 export async function getCharacterListItems({ userId }: { userId: User["id"] }) {
   const { data } = await supabase
     .from("player_characters")
-    .select("id, title")
+    .select("id, name")
     .eq("profile_id", userId);
 
   return data;
@@ -25,7 +25,7 @@ export async function createCharacter({
 }: Pick<Character, "name"> & { userId: User["id"] }) {
   const { data, error } = await supabase
     .from("player_characters")
-    .insert([{ name, associated_uid: userId }])
+    .insert([{ name: name, associated_uid: userId }])
     .single();
 
   if (!error) {
