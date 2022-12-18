@@ -33,8 +33,8 @@ export default function CharactersPage() {
                 📝 {character.name}
                 </NavLink>
             </li>
-            <Outlet />
             ))}
+            <Outlet />
         </ol>
     )
   );
