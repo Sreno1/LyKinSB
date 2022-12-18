@@ -33,7 +33,7 @@ export default function NewCharacterPage() {
         <label className="flex w-full flex-col gap-1">
           <span>Name: </span>
           <input
-            name="title"
+            name="name"
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
           />
         </label>
