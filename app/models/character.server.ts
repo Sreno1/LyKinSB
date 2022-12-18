@@ -5,13 +5,14 @@ export type Character = {
   id: string;
   name: string;
   last: string;
+  associated_uid: string;
 };
 
 export async function getCharacterListItems({ userId }: { userId: User["id"] }) {
   const { data } = await supabase
     .from("player_characters")
     .select("id, name")
-    .eq("profile_id", userId);
+    .eq("associated_uid", userId);
 
   return data;
 }
@@ -38,7 +39,7 @@ export async function deleteCharacter({
   const { error } = await supabase
     .from("player_characters")
     .delete({ returning: "minimal" })
-    .match({ id, profile_id: userId });
+    .match({ id, associated_uid: userId });
 
   if (!error) {
     return {};
@@ -54,13 +55,13 @@ export async function getCharacter({
   const { data, error } = await supabase
     .from("characters")
     .select("*")
-    .eq("profile_id", userId)
+    .eq("associated_uid", userId)
     .eq("id", id)
     .single();
 
   if (!error) {
     return {
-      userId: data.profile_id,
+      userId: data.associated_uid,
       id: data.id,
       name: data.name,
       health: data.body,
