@@ -1,43 +1,42 @@
 import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import type { Note } from "~/models/note.server";
-import { deleteNote, getNote } from "~/models/note.server";
+import type { Character } from "~/models/character.server";
+import { deleteCharacter, getCharacter } from "~/models/character.server";
 import { requireUserId } from "~/session.server";
 import invariant from "tiny-invariant";
 
 type LoaderData = {
-  note: Note;
+  character: Character;
 };
 
 export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request);
-  invariant(params.noteId, "noteId not found");
+  invariant(params.characterId, "characterId not found");
 
-  const note = await getNote({ userId, id: params.noteId });
-  if (!note) {
+  const character = await getCharacter({ userId, id: params.characterId });
+  if (!character) {
     throw new Response("Not Found", { status: 404 });
   }
 
-  return json({ note });
+  return json({ character });
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
-  invariant(params.noteId, "noteId not found");
+  invariant(params.characterId, "noteId not found");
 
-  await deleteNote({ userId, id: params.noteId });
+  await deleteCharacter({ userId, id: params.characterId });
 
   return redirect("/notes");
 };
 
-export default function NoteDetailsPage() {
+export default function CharacterDetailsPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
 
   return (
     <div>
-      <h3 className="text-2xl font-bold">{data.note.title}</h3>
-      <p className="py-6">{data.note.body}</p>
+      <h3 className="text-2xl font-bold">{data.character.name}</h3>
       <hr className="my-4" />
       <Form method="post">
         <button

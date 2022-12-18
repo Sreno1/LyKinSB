@@ -1,30 +1,31 @@
 import type { User } from "./user.server";
 import { supabase } from "./user.server";
 
-export type Note = {
+export type Character = {
   id: string;
-  title: string;
-  body: string;
-  profile_id: string;
+  name: string;
+  associated_uid: number;
+  age: number;
+  health: number;
+  experience: number;
 };
 
-export async function getNoteListItems({ userId }: { userId: User["id"] }) {
+export async function getCharacterListItems({ userId }: { userId: User["id"] }) {
   const { data } = await supabase
-    .from("notes")
+    .from("player_characters")
     .select("id, title")
     .eq("profile_id", userId);
 
   return data;
 }
 
-export async function createNote({
-  title,
-  body,
+export async function createCharacter({
+  name,
   userId,
-}: Pick<Note, "body" | "title"> & { userId: User["id"] }) {
+}: Pick<Character, "name"> & { userId: User["id"] }) {
   const { data, error } = await supabase
-    .from("notes")
-    .insert([{ title, body, profile_id: userId }])
+    .from("player_characters")
+    .insert([{ name, associated_uid: userId }])
     .single();
 
   if (!error) {
@@ -34,12 +35,12 @@ export async function createNote({
   return null;
 }
 
-export async function deleteNote({
+export async function deleteCharacter({
   id,
   userId,
-}: Pick<Note, "id"> & { userId: User["id"] }) {
+}: Pick<Character, "id"> & { userId: User["id"] }) {
   const { error } = await supabase
-    .from("notes")
+    .from("player_characters")
     .delete({ returning: "minimal" })
     .match({ id, profile_id: userId });
 
@@ -50,12 +51,12 @@ export async function deleteNote({
   return null;
 }
 
-export async function getNote({
+export async function getCharacter({
   id,
   userId,
-}: Pick<Note, "id"> & { userId: User["id"] }) {
+}: Pick<Character, "id"> & { userId: User["id"] }) {
   const { data, error } = await supabase
-    .from("notes")
+    .from("characters")
     .select("*")
     .eq("profile_id", userId)
     .eq("id", id)
@@ -65,8 +66,10 @@ export async function getNote({
     return {
       userId: data.profile_id,
       id: data.id,
-      title: data.title,
-      body: data.body,
+      name: data.name,
+      health: data.body,
+      age: data.age,
+      experience: data.experience,
     };
   }
 

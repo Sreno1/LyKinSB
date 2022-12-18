@@ -1,79 +1,51 @@
-import type { LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import type { Note } from "~/models/note.server";
-import { getNoteListItems } from "~/models/note.server";
+import type { ActionFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import { Form } from "@remix-run/react";
+import { createCharacter } from "~/models/character.server";
 import { requireUserId } from "~/session.server";
-import { useUser } from "~/utils";
 
-type LoaderData = {
-  noteListItems: Note[];
-};
-
-export async function loader ({ request }: LoaderArgs) {
+export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItems({ userId });
-  return json({ noteListItems });
+
+  const formData = await request.formData();
+  const name = formData.get("name");
+
+  if (typeof title !== "string" || title.length === 0) {
+    return json({ errors: { title: "Title is required" } }, { status: 400 });
+  }
+
+  const character = await createCharacter({ name, userId });
+  return redirect(`/character/${character.id}`);
 };
 
-export default function NotesPage() {
-  const data = useLoaderData<typeof loader>() as LoaderData;
-
+export default function NewCharacterPage() {
   return (
-    <div className="flex h-full min-h-screen flex-col">
-      <Header />
-      <main className="flex h-full bg-white">
-        <div className="h-full w-80 border-r bg-gray-50">
-          <Link to="new" className="block p-4 text-xl text-blue-500">
-            + New Note
-          </Link>
-
-          <hr />
-
-          {data.noteListItems.length === 0 ? (
-            <p className="p-4">No notes yet</p>
-          ) : (
-            <ol>
-              {data.noteListItems.map((note) => (
-                <li key={note.id}>
-                  <NavLink
-                    className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
-                    to={note.id}
-                  >
-                    📝 {note.title}
-                  </NavLink>
-                </li>
-              ))}
-            </ol>
-          )}
-        </div>
-
-        <div className="flex-1 p-6">
-          <Outlet />
-        </div>
-      </main>
-    </div>
-  );
-}
-
-function Header() {
-  const user = useUser();
-  return (
-    <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
-      <h1 className="text-3xl font-bold">
-        <Link to=".">Notes</Link>
-      </h1>
-      <p>{user.email}</p>
-      <Form action="/logout" method="post">
+    <Form
+      method="post"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+        width: "100%",
+      }}
+    >
+      <div>
+        <label className="flex w-full flex-col gap-1">
+          <span>Name: </span>
+          <input
+            name="title"
+            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+          />
+        </label>
+      </div>
+      <div className="text-right">
         <button
           type="submit"
-          className="rounded bg-slate-600 py-2 px-4 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
+          className="rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
         >
-          Logout
+          Save
         </button>
-      </Form>
-    </header>
+      </div>
+    </Form>
   );
 }
