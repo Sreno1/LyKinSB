@@ -16,22 +16,24 @@ export async function loader ({ request }: LoaderArgs) {
 
 export default function CharactersPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
-  {data.characterListItems.length === 0 ? (
-    <p className="p-4">No characters yet</p>
-    ) : (
-    <ol>
-        {data.characterListItems.map((character) => (
-        <li key={character.id}>
-            <NavLink
-            className={({ isActive }) =>
-                `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-            }
-            to={character.id}
-            >
-            📝 {character.name}
-            </NavLink>
-        </li>
-        ))}
-    </ol>
-    )}
+  return (
+    data.characterListItems.length === 0 ? (
+        <p className="p-4">No characters yet</p>
+        ) : (
+        <ol>
+            {data.characterListItems.map((character) => (
+            <li key={character.id}>
+                <NavLink
+                className={({ isActive }) =>
+                    `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                }
+                to={character.id}
+                >
+                📝 {character.name}
+                </NavLink>
+            </li>
+            ))}
+        </ol>
+        )
+  );
 }
