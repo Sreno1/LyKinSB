@@ -5,14 +5,14 @@ export type Character = {
   id: string;
   name: string;
   last: string;
-  associated_uid: string;
+  profile_id: string;
 };
 
 export async function getCharacterListItems({ userId }: { userId: User["id"] }) {
   const { data } = await supabase
     .from("player_characters")
     .select("id, name")
-    .eq("associated_uid", userId);
+    .eq("profile_id", userId);
 
   return data;
 }
@@ -23,7 +23,7 @@ export async function createCharacter({
   userId,
 }: Pick<Character, "last" | "name"> & { userId: User["id"] }) {  const { data, error } = await supabase
     .from("player_characters")
-    .insert([{ name, last, associated_uid: userId }])
+    .insert([{ name, last, profile_id: userId }])
     .single();
 
   if (!error) {
@@ -39,7 +39,7 @@ export async function deleteCharacter({
   const { error } = await supabase
     .from("player_characters")
     .delete({ returning: "minimal" })
-    .match({ id, associated_uid: userId });
+    .match({ id, profile_id: userId });
 
   if (!error) {
     return {};
@@ -55,18 +55,15 @@ export async function getCharacter({
   const { data, error } = await supabase
     .from("player_characters")
     .select("*")
-    .eq("associated_uid", userId)
+    .eq("profile_id", userId)
     .eq("id", id)
     .single();
 
   if (!error) {
     return {
-      userId: data.associated_uid,
+      userId: data.profile_id,
       id: data.id,
       name: data.name,
-      health: data.body,
-      age: data.age,
-      experience: data.experience,
     };
   }
 
