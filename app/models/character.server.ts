@@ -22,7 +22,7 @@ export async function createCharacter({
   const { data, error } = await supabase
     .from("player_characters")
     .insert({ name: name })
-    .single();
+    .select();
 
   if (!error) {
     return data;
