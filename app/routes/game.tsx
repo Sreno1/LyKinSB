@@ -1,23 +1,10 @@
-import type { LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import type { Character } from "~/models/character.server";
-import { getCharacterListItems } from "~/models/character.server";
-import { requireUserId } from "~/session.server";
+
 import { useUser } from "~/utils";
 
-type LoaderData = {
-  characterListItems: Character[];
-};
 
-export async function loader ({ request }: LoaderArgs) {
-  const userId = await requireUserId(request);
-  const characterListItems = await getCharacterListItems({ userId });
-  return json({ characterListItems });
-};
 
 export default function GamePage() {
-  const data = useLoaderData<typeof loader>() as LoaderData;
 
   /*if (player) {*/
     return (
@@ -28,27 +15,11 @@ export default function GamePage() {
           <Link to="village" className="block p-4 text-xl text-blue-500">
             View Village
           </Link>
+          <Link to="characters" className="block p-4 text-xl text-blue-500">
+            View Characters
+          </Link>
 
           <hr />
-
-          {data.characterListItems.length === 0 ? (
-            <p className="p-4">No notes yet</p>
-          ) : (
-            <ol>
-              {data.characterListItems.map((character) => (
-                <li key={character.id}>
-                  <NavLink
-                    className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
-                    to={character.id}
-                  >
-                    📝 {character.name}
-                  </NavLink>
-                </li>
-              ))}
-            </ol>
-          )}
         </div>
 
         <div className="flex-1 p-6">
