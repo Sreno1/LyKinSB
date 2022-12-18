@@ -1,10 +1,11 @@
 import { Link } from "@remix-run/react";
 import { useOptionalUser } from "~/utils";
-import { isPlayer } from "~/models/profiles.server";
 
-export async function Index() {
+export default function Index() {
   const user = useOptionalUser();
-  const player = await isPlayer();
+  // todo: figure out how to associate the logged in user to a character via the profiles association.
+  // note: it seems like await is used with functions that are imported or use the database (not sure)
+  // in any case those can only be used in async functions, and these pages have to be default
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
       <div className="relative sm:pb-16 sm:pt-8">
@@ -29,21 +30,21 @@ export async function Index() {
               </p>
               <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
                 {user ? (
-                  player ? (
-                    <Link
-                      to="/game"
+                  /*player ? (
+                    */<Link
+                      to="/character"
                       className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-violet-700 shadow-sm hover:bg-violet-50 sm:px-8"
                     >
                       Continue
                     </Link>
-                  ) : (
+                  /*) : (
                     <Link
                       to="/character/creation"
                       className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-violet-700 shadow-sm hover:bg-violet-50 sm:px-8"
                     >
                       Begin Your Journey
                     </Link>
-                  )
+                  )*/
                   ) : (
                     <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
                       <Link

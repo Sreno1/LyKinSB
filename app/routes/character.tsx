@@ -5,7 +5,6 @@ import type { Character } from "~/models/character.server";
 import { getCharacterListItems } from "~/models/character.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
-import { isPlayer } from "~/models/profiles.server";
 
 type LoaderData = {
   characterListItems: Character[];
@@ -17,11 +16,10 @@ export async function loader ({ request }: LoaderArgs) {
   return json({ characterListItems });
 };
 
-export async function CharacterPage() {
+export default function CharacterPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
-  const player = await isPlayer();
 
-  if (player) {
+  /*if (player) {*/
     return (
     <div className="flex h-full min-h-screen flex-col">
       <Header />
@@ -59,7 +57,7 @@ export async function CharacterPage() {
       </main>
     </div>
   );
-  } else {
+  /*} else {
     return (
       <div className="flex h-full min-h-screen flex-col">
         <Header />
@@ -69,7 +67,7 @@ export async function CharacterPage() {
         
       </div>
     );
-  }
+  }*/
 }
 
 function Header() {
