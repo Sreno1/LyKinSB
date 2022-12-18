@@ -32,11 +32,11 @@ export default function CharactersPage() {
                 >
                 📝 {character.name}
                 </NavLink>
+                <Outlet />
             </li>
-            <Outlet />
+            
             ))}
         </ol>
-        
     )
   );
 }
