@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function CharacterDetailsPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
-
+  // todo: figure out how to display and manipulate stats here like experience and health
   return (
     <div>
       <h3 className="text-2xl font-bold">{data.character.name}</h3>
