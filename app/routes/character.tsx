@@ -19,7 +19,7 @@ export async function loader ({ request }: LoaderArgs) {
 
 export default function CharacterPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
-  const player = isPlayer();
+  const player = await isPlayer();
 
   if (player) {
     return (

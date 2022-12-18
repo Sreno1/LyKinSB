@@ -2,9 +2,9 @@ import { Link } from "@remix-run/react";
 import { useOptionalUser } from "~/utils";
 import { isPlayer } from "~/models/profiles.server";
 
-export default function Index() {
+export async function Index() {
   const user = useOptionalUser();
-  const player = isPlayer();
+  const player = await isPlayer();
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
       <div className="relative sm:pb-16 sm:pt-8">
