@@ -12,7 +12,7 @@ export async function getCharacterListItems({ userId }: { userId: User["id"] }) 
   const { data } = await supabase
     .from("player_characters")
     .select("id, name")
-    .eq("profile_id", userId);
+    .eq("associated_uid", userId);
 
   return data;
 }
@@ -55,13 +55,13 @@ export async function getCharacter({
   const { data, error } = await supabase
     .from("player_characters")
     .select("*")
-    .eq("profile_id", userId)
+    .eq("associated_uid", userId)
     .eq("id", id)
     .single();
 
   if (!error) {
     return {
-      userId: data.profile_id,
+      userId: data.associated_uid,
       id: data.id,
       name: data.name,
     };
