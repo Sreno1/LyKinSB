@@ -53,7 +53,7 @@ export async function getCharacter({
   userId,
 }: Pick<Character, "id"> & { userId: User["id"] }) {
   const { data, error } = await supabase
-    .from("characters")
+    .from("player_characters")
     .select("*")
     .eq("associated_uid", userId)
     .eq("id", id)

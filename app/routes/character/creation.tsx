@@ -9,7 +9,6 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const name = formData.get("name");
   const last = formData.get("last");
-  console.log(name);
   const character = await createCharacter({ name, last, userId });
   return redirect(`/character/${character.id}`);
 };
