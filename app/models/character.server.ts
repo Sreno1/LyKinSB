@@ -5,6 +5,7 @@ export type Character = {
   id: string;
   name: string;
   last: string;
+  associated_uid: string;
   profile_id: string;
 };
 
@@ -23,7 +24,7 @@ export async function createCharacter({
   userId,
 }: Pick<Character, "last" | "name"> & { userId: User["id"] }) {  const { data, error } = await supabase
     .from("player_characters")
-    .insert([{ name, last, profile_id: userId }])
+    .insert([{ name, last, associated_uid: userId }])
     .single();
 
   if (!error) {
@@ -39,7 +40,7 @@ export async function deleteCharacter({
   const { error } = await supabase
     .from("player_characters")
     .delete({ returning: "minimal" })
-    .match({ id, profile_id: userId });
+    .match({ id, associated_uid: userId });
 
   if (!error) {
     return {};
