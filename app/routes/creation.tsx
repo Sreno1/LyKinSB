@@ -5,16 +5,13 @@ import { createCharacter } from "~/models/character.server";
 import { requireUserId } from "~/session.server";
 
 export const action: ActionFunction = async ({ request }) => {
-  alert("test");
   const userId = await requireUserId(request);
-  console.log(userId);
   const formData = await request.formData();
   const name = formData.get("name");
 
   console.log(name);
-  //const character = await createCharacter({ name, userId });
-  //return redirect(`/character/${character.id}`);
-  return redirect('/');
+  const character = await createCharacter({ name, userId });
+  return redirect(`/character/${character.id}`);
 };
 
 export default function NewCharacterPage() {

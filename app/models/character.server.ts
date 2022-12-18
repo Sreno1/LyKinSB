@@ -15,14 +15,10 @@ export async function getCharacterListItems({ userId }: { userId: User["id"] }) 
   return data;
 }
 
-export async function createCharacter({
-  name,
-  userId,
-}: Pick<Character, "name"> & { userId: User["id"] }) {
-  console.log('test');
+export async function createCharacter({ name, userId }: { name: string, userId: User["id"] }) {
   const { data, error } = await supabase
     .from("player_characters")
-    .insert({ id:1, name: "name" })
+    .insert({ name: name })
     .select();
 
   if (!error) {
