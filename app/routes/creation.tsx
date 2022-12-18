@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (typeof name !== "string" || name.length === 0) {
     return json({ errors: { name: "name is required" } }, { status: 400 });
   }
-
+  console.log(name);
   const character = await createCharacter({ name, userId });
   return redirect(`/character/${character.id}`);
 };
@@ -26,7 +26,7 @@ export default function NewCharacterPage() {
         display: "flex",
         flexDirection: "column",
         gap: 8,
-        width: "100%",
+        width: "60%",
       }}
     >
       <div>

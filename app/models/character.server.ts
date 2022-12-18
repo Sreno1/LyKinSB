@@ -19,6 +19,7 @@ export async function createCharacter({
   name,
   userId,
 }: Pick<Character, "name"> & { userId: User["id"] }) {
+  console.log('test');
   const { data, error } = await supabase
     .from("player_characters")
     .insert({ id:1, name: "name" })
@@ -27,10 +28,6 @@ export async function createCharacter({
   if (!error) {
     return data;
   }
-
-  console.log(error);
-  console.log(data);
-
   return null;
 }
 
