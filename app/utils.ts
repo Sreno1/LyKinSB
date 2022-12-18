@@ -24,15 +24,6 @@ export function useOptionalUser() {
   return data.user;
 }
 
-// todo: figure this out - if entry exists in player_character where profile_id = user id
-export function isPlayer() {
-  const data = useMatchesData("root");
-  if (!data || !isUser(data.user)) {
-    return undefined;
-  }
-  return false;
-}
-
 export function useUser() {
   const maybeUser = useOptionalUser();
   if (!maybeUser) {

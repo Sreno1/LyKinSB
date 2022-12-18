@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { useOptionalUser } from "~/utils";
-import { isPlayer } from "~/utils";
+import { isPlayer } from "~/models/profiles.server";
 
 export default function Index() {
   const user = useOptionalUser();
