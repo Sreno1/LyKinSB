@@ -6,7 +6,7 @@ import { requireUserId } from "~/session.server";
 
 export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
-
+  console.log(userId);
   const formData = await request.formData();
   const name = formData.get("name");
 
