@@ -34,7 +34,9 @@ export default function CharactersPage() {
                 </NavLink>
             </li>
             ))}
-            <Outlet />
+            <div className="flex-1 p-6">
+                <Outlet />
+            </div>
         </ol>
     )
   );
