@@ -5,7 +5,6 @@ import type { Character } from "~/models/character.server";
 import { getCharacterListItems } from "~/models/character.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
-import { useRoute } from '@react-navigation/native';
 
 type LoaderData = {
   characterListItems: Character[];
@@ -61,13 +60,11 @@ export default function CharacterPage() {
 
 function Header() {
   const user = useUser();
-  const route = useRoute();
   return (
     <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
       <h1 className="text-3xl font-bold">
         <Link to=".">LyKin</Link>
       </h1>
-      <p>{route.name}</p>
       <Form action="/logout" method="post">
         <button
           type="submit"
