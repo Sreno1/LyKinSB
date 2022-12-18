@@ -34,9 +34,9 @@ export default function CharactersPage() {
             </li>
             ))}
         </ol>
-    )
     <div className="flex-1 p-6">
         <Outlet />
     </div>
+    )
   );
 }
