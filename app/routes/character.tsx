@@ -42,7 +42,7 @@ export default function CharacterPage() {
                     }
                     to={character.id}
                   >
-                    📝 {character.title}
+                    📝 {character.name}
                   </NavLink>
                 </li>
               ))}
