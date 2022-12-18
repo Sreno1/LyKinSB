@@ -5,7 +5,6 @@ export type Character = {
   id: string;
   name: string;
   last: string;
-  associated_uid: string;
   profile_id: string;
 };
 
@@ -24,7 +23,7 @@ export async function createCharacter({
   userId,
 }: Pick<Character, "last" | "name"> & { userId: User["id"] }) {  const { data, error } = await supabase
     .from("player_characters")
-    .insert([{ name, last, associated_uid: userId }])
+    .insert([{ name, last, profile_id: userId }])
     .single();
 
   if (!error) {

@@ -10,7 +10,7 @@ export const action: ActionFunction = async ({ request }) => {
   const name = formData.get("name");
   const last = formData.get("last");
   const character = await createCharacter({ name, last, userId });
-  return redirect(`/game/character/${character.id}`);
+  return redirect(`/game/characters/${character.id}`);
 };
 
 export default function NewCharacterPage() {
