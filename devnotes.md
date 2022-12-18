@@ -10,3 +10,7 @@ Medieval Dynasty
 
 Valheim
 oGame/Gladiatus
+
+## features
+
+- favor from diff. gods (Odin, Loki, etc)
