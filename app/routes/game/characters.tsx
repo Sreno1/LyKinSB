@@ -17,30 +17,26 @@ export async function loader ({ request }: LoaderArgs) {
 export default function CharactersPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
   return (
-    <div className="flex h-full min-h-screen flex-col">
-        {data.characterListItems.length === 0 ? (
-            <p className="p-4">No characters yet</p>
-            ) : (
-            
-            <ol>
-                {data.characterListItems.map((character) => (
-                <li key={character.id}>
-                    <NavLink
-                    className={({ isActive }) =>
-                        `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
-                    to={character.id}
-                    >
-                    📝 {character.name}
-                    </NavLink>
-                </li>
-                ))}}
-            </ol>
+    data.characterListItems.length === 0 ? (
+        <p className="p-4">No characters yet</p>
+        ) : (
         
-            <div className="flex-1 p-6">
-                <Outlet />
-            </div>
-        </div>
+        <ol>
+            {data.characterListItems.map((character) => (
+            <li key={character.id}>
+                <NavLink
+                className={({ isActive }) =>
+                    `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                }
+                to={character.id}
+                >
+                📝 {character.name}
+                </NavLink>
+            </li>
+            <Outlet />
+            ))}
+        </ol>
+        
     )
   );
 }
