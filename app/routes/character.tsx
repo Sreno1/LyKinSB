@@ -17,7 +17,7 @@ export async function loader ({ request }: LoaderArgs) {
   return json({ characterListItems });
 };
 
-export default function CharacterPage() {
+export async function CharacterPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
   const player = await isPlayer();
 
