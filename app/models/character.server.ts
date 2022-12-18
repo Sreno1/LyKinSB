@@ -4,10 +4,6 @@ import { supabase } from "./user.server";
 export type Character = {
   id: string;
   name: string;
-  associated_uid: number;
-  age: number;
-  health: number;
-  experience: number;
 };
 
 export async function getCharacterListItems({ userId }: { userId: User["id"] }) {
@@ -25,7 +21,7 @@ export async function createCharacter({
 }: Pick<Character, "name"> & { userId: User["id"] }) {
   const { data, error } = await supabase
     .from("player_characters")
-    .insert([{ name: name, associated_uid: parseInt(userId) }])
+    .insert([{ name: name }])
     .single();
 
   if (!error) {
