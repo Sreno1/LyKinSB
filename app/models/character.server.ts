@@ -24,7 +24,7 @@ export async function createCharacter({
 }: Pick<Character, "last" | "name"> & { userId: User["id"] }) {  const { data, error } = await supabase
     .from("player_characters")
     .insert([{ name, last, associated_uid: userId }])
-    .select();
+    .single();
 
   if (!error) {
     return data;
