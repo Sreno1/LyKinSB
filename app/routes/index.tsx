@@ -13,37 +13,38 @@ export default function Index() {
             <div className="absolute inset-0">
               <img
                 className="h-full w-full object-cover"
-                src="https://img2.storyblok.com/f/157036/1920x1080/3dacf66710/news-2.jpg"
-                alt="Large stone castle"
+                src="https://user-images.githubusercontent.com/8431042/161311608-f5d43ab2-85b4-40c5-9dea-065985e5adf5.jpeg"
+                alt="BTS playing on stage with the group leaving in action poses"
               />
               <div className="absolute inset-0 bg-[color:rgba(139,92,246,0.5)] mix-blend-multiply" />
             </div>
             <div className="lg:pb-18 relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-32">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
                 <span className="block uppercase text-violet-500 drop-shadow-md">
-                  LyKin
+                  K-Pop Stack
                 </span>
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                Lead your people into splendor.
+                Check the README.md file for instructions on how to get this
+                project deployed.
               </p>
               <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
                 {user ? (
-                  if (player) {
+                  {player ? (
                     <Link
-                      to="/continue"
+                      to="/game"
                       className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-violet-700 shadow-sm hover:bg-violet-50 sm:px-8"
                     >
                       Continue
                     </Link>
-                  } else {
+                  ) : (
                     <Link
                       to="/creation"
                       className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-violet-700 shadow-sm hover:bg-violet-50 sm:px-8"
                     >
-                      Begin your Journey
+                      Begin Your Journey
                     </Link>
-                  }
+                  )}
                   ) : (
                     <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
                       <Link
@@ -59,7 +60,7 @@ export default function Index() {
                         Log In
                       </Link>
                     </div>
-                  )}
+                )}
               </div>
               <a href="https://remix.run">
                 <img
