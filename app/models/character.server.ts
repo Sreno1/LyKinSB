@@ -21,12 +21,15 @@ export async function createCharacter({
 }: Pick<Character, "name"> & { userId: User["id"] }) {
   const { data, error } = await supabase
     .from("player_characters")
-    .insert([{ name: name }])
+    .insert({ name: name })
     .single();
 
   if (!error) {
     return data;
   }
+
+  console.log(error);
+  console.log(data);
 
   return null;
 }
