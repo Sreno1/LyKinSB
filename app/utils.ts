@@ -24,6 +24,15 @@ export function useOptionalUser() {
   return data.user;
 }
 
+// todo: figure this out
+export function isPlayer() {
+  const data = useMatchesData("root");
+  if (!data || !isUser(data.user)) {
+    return undefined;
+  }
+  return false;
+}
+
 export function useUser() {
   const maybeUser = useOptionalUser();
   if (!maybeUser) {
