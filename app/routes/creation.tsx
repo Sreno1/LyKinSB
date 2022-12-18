@@ -10,8 +10,8 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const name = formData.get("name");
 
-  if (typeof title !== "string" || title.length === 0) {
-    return json({ errors: { title: "Title is required" } }, { status: 400 });
+  if (typeof name !== "string" || name.length === 0) {
+    return json({ errors: { name: "name is required" } }, { status: 400 });
   }
 
   const character = await createCharacter({ name, userId });
