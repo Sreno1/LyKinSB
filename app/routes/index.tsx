@@ -6,6 +6,8 @@ export default function Index() {
   // todo: figure out how to associate the logged in user to a character via the profiles association.
   // note: it seems like await is used with functions that are imported or use the database (not sure)
   // in any case those can only be used in async functions, and these pages have to be default
+
+  // remove "profiles" - I don't think this table is necessary - just use the id within users (auth) as the associated_uid reference within player_characters
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
       <div className="relative sm:pb-16 sm:pt-8">
