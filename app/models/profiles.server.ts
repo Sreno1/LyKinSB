@@ -6,13 +6,13 @@ export type Profile = {
   email: string;
 };
 
-export async function isPlayer({
-  email
-}: Pick<Profile, "id"> & { email: User["email"] }) {
+export async function isPlayer() {
+  const { data: { user } } = await supabase.auth.getUser()
+
   const { data, error } = await supabase
     .from("profiles")
     .select("*")
-    .eq("email", email)
+    .eq("email", user.email)
     .single();
 
   if (!error && data.id != null) {
