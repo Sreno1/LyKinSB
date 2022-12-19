@@ -6,6 +6,9 @@ export type Character = {
   name: string;
   last: string;
   profile_id: string;
+  age: number;
+  health: number;
+  experience: number;
 };
 
 export async function getCharacterListItems({ userId }: { userId: User["id"] }) {
@@ -32,6 +35,19 @@ export async function createCharacter({
   return null;
 }
 
+export async function setExperience(amount: number, characterId: string) {  
+
+  const { data, error } = await supabase
+    .from("player_characters")
+    .update([{ experience: amount }])
+    .eq('profile_id', 'someValue')
+
+  if (!error) {
+    return data;
+  }
+  return null;
+}
+
 export async function deleteCharacter({
   id,
   userId,
@@ -39,7 +55,7 @@ export async function deleteCharacter({
   const { error } = await supabase
     .from("player_characters")
     .delete({ returning: "minimal" })
-    .match({ id, associated_uid: userId });
+    .match({ id, profile_id: userId });
 
   if (!error) {
     return {};
@@ -64,6 +80,10 @@ export async function getCharacter({
       userId: data.profile_id,
       id: data.id,
       name: data.name,
+      last: data.last,
+      age: data.age,
+      health: data.health,
+      experience: data.experience
     };
   }
 
